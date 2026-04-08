@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Diálogo personalizado: confirmación de compra -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="32dp"
+    android:background="@drawable/bg_dialog_rounded">
+
+    <!-- Ícono de carrito dentro de un círculo azul -->
+    <FrameLayout
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:background="@drawable/bg_circle_confirm"
+        android:layout_marginBottom="20dp">
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_cart_checkout"
+            android:contentDescription="Confirmar compra" />
+
+    </FrameLayout>
+
+    <!-- Título del diálogo -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirmar compra"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Cantidad de artículos -->
+    <TextView
+        android:id="@+id/dialogItemCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Artículos: 0"
+        android:textSize="14sp"
+        android:textColor="@color/text_secondary"
+        android:layout_marginBottom="4dp" />
+
+    <!-- Total a pagar -->
+    <TextView
+        android:id="@+id/dialogTotalAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total: $ 0"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@color/price_green"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Pregunta de confirmación -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿Deseas finalizar la compra?"
+        android:textSize="14sp"
+        android:textColor="@color/text_secondary"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Botón confirmar compra -->
+    <TextView
+        android:id="@+id/btnConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_button_primary"
+        android:text="Comprar ahora"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="10dp" />
+
+    <!-- Botón cancelar -->
+    <TextView
+        android:id="@+id/btnCancel"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_button_secondary"
+        android:text="Cancelar"
+        android:textColor="@color/text_secondary"
+        android:textSize="16sp"
+        android:gravity="center" />
+
+</LinearLayout>

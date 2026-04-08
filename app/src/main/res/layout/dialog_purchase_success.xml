@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Diálogo personalizado: compra exitosa -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="32dp"
+    android:background="@drawable/bg_dialog_rounded">
+
+    <!-- Ícono de éxito dentro de un círculo verde -->
+    <FrameLayout
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:background="@drawable/bg_circle_success"
+        android:layout_marginBottom="20dp">
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_check_circle"
+            android:contentDescription="Éxito" />
+
+    </FrameLayout>
+
+    <!-- Título del diálogo -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Compra exitosa"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Mensaje descriptivo -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tu pedido ha sido procesado correctamente."
+        android:textSize="14sp"
+        android:textColor="@color/text_secondary"
+        android:gravity="center"
+        android:layout_marginBottom="4dp" />
+
+    <!-- Total pagado -->
+    <TextView
+        android:id="@+id/dialogSuccessTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total: $ 0"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@color/price_green"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Botón para cerrar -->
+    <TextView
+        android:id="@+id/btnClose"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_button_primary"
+        android:text="Aceptar"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:gravity="center" />
+
+</LinearLayout>
