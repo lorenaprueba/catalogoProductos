@@ -3,42 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/perfilFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.example.catalogoproductos.ui.HomeFragment"
-        android:label="Inicio"
-        tools:layout="@layout/fragment_home" />
-
-    <fragment
-        android:id="@+id/catalogFragment"
-        android:name="com.example.catalogoproductos.ui.CatalogFragment"
-        android:label="Catálogo"
-        tools:layout="@layout/fragment_catalog" />
-
-    <fragment
-        android:id="@+id/favoritesFragment"
-        android:name="com.example.catalogoproductos.ui.FavoritesFragment"
-        android:label="Favoritos"
-        tools:layout="@layout/fragment_favorites" />
-
-    <fragment
-        android:id="@+id/cartFragment"
-        android:name="com.example.catalogoproductos.ui.CartFragment"
-        android:label="Carrito"
-        tools:layout="@layout/fragment_cart" />
-
-    <fragment
-        android:id="@+id/profileFragment"
+        android:id="@+id/perfilFragment"
         android:name="com.example.catalogoproductos.ui.ProfileFragment"
         android:label="Perfil"
         tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/fotosFragment"
+        android:name="com.example.catalogoproductos.ui.FotosFragment"
+        android:label="Fotos"
+        tools:layout="@layout/fragment_fotos" />
+
+    <fragment
+        android:id="@+id/videoFragment"
+        android:name="com.example.catalogoproductos.ui.VideoFragment"
+        android:label="Video"
+        tools:layout="@layout/fragment_video" />
 
     <fragment
         android:id="@+id/webFragment"
         android:name="com.example.catalogoproductos.ui.WebFragment"
         android:label="Web"
         tools:layout="@layout/fragment_web" />
+
+    <fragment
+        android:id="@+id/botonesFragment"
+        android:name="com.example.catalogoproductos.ui.BotonesFragment"
+        android:label="Botones"
+        tools:layout="@layout/fragment_botones" />
 
 </navigation>
