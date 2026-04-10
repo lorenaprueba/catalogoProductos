@@ -37,4 +37,10 @@
         android:text="jorge@poligran.com"
         android:layout_marginBottom="20dp"/>
 
-    <Button
+        <Button
+        android:id="@+id/btnCerrarSesion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cerrar Sesión" />
+
+</LinearLayout>
