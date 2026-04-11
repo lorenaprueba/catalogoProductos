@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/inicioFragment"
+        android:icon="@drawable/ic_home"
+        android:title="Inicio" />
+    <item
+        android:id="@+id/catalogoFragment"
+        android:icon="@drawable/ic_view_list"
+        android:title="Catálogo" />
+    <item
+        android:id="@+id/favoritosFragment"
+        android:icon="@drawable/ic_favorite"
+        android:title="Favoritos" />
+    <item
+        android:id="@+id/carritoFragment"
+        android:icon="@drawable/ic_shopping_cart"
+        android:title="Carrito" />
+    <item
         android:id="@+id/perfilFragment"
-        android:icon="@android:drawable/ic_menu_my_calendar"
+        android:icon="@drawable/ic_person"
         android:title="Perfil" />
     <item
-        android:id="@+id/fotosFragment"
-        android:icon="@android:drawable/ic_menu_gallery"
-        android:title="Fotos" />
-    <item
-        android:id="@+id/videoFragment"
-        android:icon="@android:drawable/ic_media_play"
-        android:title="Video" />
-    <item
         android:id="@+id/webFragment"
-        android:icon="@android:drawable/ic_menu_info_details"
+        android:icon="@drawable/ic_web"
         android:title="Web" />
-    <item
-        android:id="@+id/botonesFragment"
-        android:icon="@android:drawable/ic_menu_manage"
-        android:title="Botones" />
 </menu>

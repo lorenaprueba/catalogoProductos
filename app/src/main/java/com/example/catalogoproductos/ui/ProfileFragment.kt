@@ -1,4 +1,4 @@
-package com.example.catalogoproductos.ui.profile
+package com.example.catalogoproductos.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -30,7 +30,7 @@ class ProfileFragment : Fragment() {
         }
 
         btnFavoritos.setOnClickListener {
-            view.findNavController().navigate(R.id.favoritesFragment)
+            Toast.makeText(context, "Favoritos en desarrollo", Toast.LENGTH_SHORT).show()
         }
     }
 }
