@@ -1,43 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Menú de navegación lateral (NavigationRailView) -->
-<!-- Define los elementos del menú que permiten navegar entre diferentes fragmentos -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <!-- Opción de Inicio: lleva al fragmento principal de bienvenida -->
     <item
-        android:id="@+id/homeFragment"
-        android:icon="@android:drawable/ic_menu_compass"
+        android:id="@+id/inicioFragment"
+        android:icon="@drawable/ic_home"
         android:title="Inicio" />
 
     <!-- Opción de Catálogo: muestra el catálogo de productos disponibles -->
     <item
-        android:id="@+id/catalogFragment"
-        android:icon="@android:drawable/ic_menu_gallery"
+        android:id="@+id/catalogoFragment"
+        android:icon="@drawable/ic_view_list"
         android:title="Catálogo" />
 
     <!-- Opción de Favoritos: muestra los productos marcados como favoritos -->
     <item
-        android:id="@+id/favoritesFragment"
-        android:icon="@android:drawable/btn_star"
+        android:id="@+id/favoritosFragment"
+        android:icon="@drawable/ic_favorite"
         android:title="Favoritos" />
 
     <!-- Opción del Carrito: accede al fragmento del carrito de compras -->
     <!-- Ícono personalizado de un carrito de compras -->
     <item
-        android:id="@+id/cartFragment"
+        android:id="@+id/carritoFragment"
         android:icon="@drawable/ic_shopping_cart"
         android:title="Carrito" />
 
     <!-- Opción de Perfil: muestra la información del usuario y su cuenta -->
     <item
-        android:id="@+id/profileFragment"
-        android:icon="@android:drawable/ic_menu_my_calendar"
+        android:id="@+id/perfilFragment"
+        android:icon="@drawable/ic_person"
         android:title="Perfil" />
 
     <!-- Opción Web: abre una vista web con información adicional -->
     <item
         android:id="@+id/webFragment"
-        android:icon="@android:drawable/ic_menu_info_details"
+        android:icon="@drawable/ic_web"
         android:title="Web" />
 
 </menu>
