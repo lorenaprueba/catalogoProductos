@@ -1,60 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#FAFAFA"
-    android:padding="16dp"
-    android:gravity="center_horizontal">
+    android:background="#FAFAFA">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Perfil"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp" />
-
-    <ImageView
-        android:id="@+id/imgPerfil"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/ic_launcher_foreground"
-        android:layout_marginBottom="16dp" />
-
-    <TextView
-        android:id="@+id/txtNombre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Jorge Torres"
-        android:textSize="18sp"
-        android:layout_marginBottom="4dp" />
-
-    <TextView
-        android:id="@+id/txtCorreo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="jorge@poligran.com"
-        android:layout_marginBottom="20dp" />
-
-    <Button
-        android:id="@+id/btnHistorial"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Historial de Compras"
-        android:layout_marginBottom="8dp" />
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center_horizontal">
 
-    <Button
-        android:id="@+id/btnFavoritos"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Mis Favoritos"
-        android:layout_marginBottom="8dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Perfil"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp" />
 
-    <Button
-        android:id="@+id/btnCerrarSesion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Cerrar Sesión" />
+        <ImageView
+            android:id="@+id/imgPerfil"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_launcher_foreground"
+            android:layout_marginBottom="16dp" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/txtNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Jorge Torres"
+            android:textSize="18sp"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/txtCorreo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="jorge@poligran.com"
+            android:layout_marginBottom="20dp" />
+
+        <Button
+            android:id="@+id/btnHistorial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Historial de Compras"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/txtHistorialTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Historial de Compras"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone"/>
+
+        <LinearLayout
+            android:id="@+id/itemHistorialA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Perfume A - Edición Premium"/>
+
+            <Button
+                android:id="@+id/btnRecomprarA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Comprar de nuevo"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/itemHistorialB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Cologne B - Fresh Breeze"/>
+
+            <Button
+                android:id="@+id/btnRecomprarB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Comprar de nuevo"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/itemHistorialC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Fragancia C - Elegante"/>
+
+            <Button
+                android:id="@+id/btnRecomprarC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Comprar de nuevo"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnFavoritos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mis Favoritos"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btnCerrarSesion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cerrar Sesión" />
+
+    </LinearLayout>
+
+</ScrollView>
