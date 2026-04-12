@@ -26,7 +26,18 @@ class ProfileFragment : Fragment() {
         val btnFavoritos = view.findViewById<Button>(R.id.btnFavoritos)
 
         btnHistorial.setOnClickListener {
-            Toast.makeText(context, "Historial en desarrollo", Toast.LENGTH_SHORT).show()
+            try {
+                val historialDisponible = false // simulación
+
+                if (historialDisponible) {
+                    Toast.makeText(requireContext(), "Mostrando historial", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(requireContext(), "Aún no has realizado compras", Toast.LENGTH_SHORT).show()
+                }
+
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(), "Error al cargar historial", Toast.LENGTH_SHORT).show()
+            }
         }
 
         btnFavoritos.setOnClickListener {
