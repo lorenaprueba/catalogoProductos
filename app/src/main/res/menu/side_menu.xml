@@ -4,24 +4,36 @@
         android:id="@+id/inicioFragment"
         android:icon="@drawable/ic_home"
         android:title="Inicio" />
+
+    <!-- Opción de Catálogo: muestra el catálogo de productos disponibles -->
     <item
         android:id="@+id/catalogoFragment"
         android:icon="@drawable/ic_view_list"
         android:title="Catálogo" />
+
+    <!-- Opción de Favoritos: muestra los productos marcados como favoritos -->
     <item
         android:id="@+id/favoritosFragment"
         android:icon="@drawable/ic_favorite"
         android:title="Favoritos" />
+
+    <!-- Opción del Carrito: accede al fragmento del carrito de compras -->
+    <!-- Ícono personalizado de un carrito de compras -->
     <item
         android:id="@+id/carritoFragment"
         android:icon="@drawable/ic_shopping_cart"
         android:title="Carrito" />
+
+    <!-- Opción de Perfil: muestra la información del usuario y su cuenta -->
     <item
         android:id="@+id/perfilFragment"
         android:icon="@drawable/ic_person"
         android:title="Perfil" />
+
+    <!-- Opción Web: abre una vista web con información adicional -->
     <item
         android:id="@+id/webFragment"
         android:icon="@drawable/ic_web"
         android:title="Web" />
+
 </menu>

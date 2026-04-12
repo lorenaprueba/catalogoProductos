@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Definición de colores personalizados para la aplicación -->
 <resources>
+    <!-- Colores básicos -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Color de líneas divisorias entre elementos -->
+    <color name="divider_gray">#E0E0E0</color>
+
+    <!-- Color de texto secundario/gris oscuro -->
+    <color name="text_secondary">#757575</color>
+
+    <!-- Color para precios y valores positivos (verde) -->
+    <color name="price_green">#388E3C</color>
 </resources>
