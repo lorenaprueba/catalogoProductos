@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.catalogoproductos.R
@@ -25,37 +24,27 @@ class ProfileFragment : Fragment() {
 
         val btnHistorial = view.findViewById<Button>(R.id.btnHistorial)
         val btnFavoritos = view.findViewById<Button>(R.id.btnFavoritos)
-        val btnCerrarSesion = view.findViewById<Button>(R.id.btnCerrarSesion)
 
-        val txtHistorialTitulo =
-            view.findViewById<TextView>(R.id.txtHistorialTitulo)
+        val layoutHistorial =
+            view.findViewById<LinearLayout>(R.id.layoutHistorial)
 
-        val itemA =
-            view.findViewById<LinearLayout>(R.id.itemHistorialA)
+        val btnComprar1 =
+            view.findViewById<Button>(R.id.btnComprar1)
 
-        val itemB =
-            view.findViewById<LinearLayout>(R.id.itemHistorialB)
+        val btnComprar2 =
+            view.findViewById<Button>(R.id.btnComprar2)
 
-        val itemC =
-            view.findViewById<LinearLayout>(R.id.itemHistorialC)
+        val btnComprar3 =
+            view.findViewById<Button>(R.id.btnComprar3)
 
-        val btnRecomprarA =
-            view.findViewById<Button>(R.id.btnRecomprarA)
-
-        val btnRecomprarB =
-            view.findViewById<Button>(R.id.btnRecomprarB)
-
-        val btnRecomprarC =
-            view.findViewById<Button>(R.id.btnRecomprarC)
+        val btnComprar4 =
+            view.findViewById<Button>(R.id.btnComprar4)
 
         btnHistorial.setOnClickListener {
 
-            try {
+            if (layoutHistorial.visibility == View.GONE) {
 
-                txtHistorialTitulo.visibility = View.VISIBLE
-                itemA.visibility = View.VISIBLE
-                itemB.visibility = View.VISIBLE
-                itemC.visibility = View.VISIBLE
+                layoutHistorial.visibility = View.VISIBLE
 
                 Toast.makeText(
                     requireContext(),
@@ -63,43 +52,49 @@ class ProfileFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
 
-            } catch (e: Exception) {
+            } else {
 
-                Toast.makeText(
-                    requireContext(),
-                    "Error al cargar historial",
-                    Toast.LENGTH_SHORT
-                ).show()
+                layoutHistorial.visibility = View.GONE
 
             }
 
         }
 
-        btnRecomprarA.setOnClickListener {
+        btnComprar1.setOnClickListener {
 
             Toast.makeText(
                 requireContext(),
-                "Perfume A añadido al carrito",
+                "Añadido al carrito",
                 Toast.LENGTH_SHORT
             ).show()
 
         }
 
-        btnRecomprarB.setOnClickListener {
+        btnComprar2.setOnClickListener {
 
             Toast.makeText(
                 requireContext(),
-                "Cologne B añadido al carrito",
+                "Añadido al carrito",
                 Toast.LENGTH_SHORT
             ).show()
 
         }
 
-        btnRecomprarC.setOnClickListener {
+        btnComprar3.setOnClickListener {
 
             Toast.makeText(
                 requireContext(),
-                "Fragancia C añadida al carrito",
+                "Añadido al carrito",
+                Toast.LENGTH_SHORT
+            ).show()
+
+        }
+
+        btnComprar4.setOnClickListener {
+
+            Toast.makeText(
+                requireContext(),
+                "Añadido al carrito",
                 Toast.LENGTH_SHORT
             ).show()
 
@@ -115,16 +110,5 @@ class ProfileFragment : Fragment() {
 
         }
 
-        btnCerrarSesion.setOnClickListener {
-
-            Toast.makeText(
-                requireContext(),
-                "Sesión cerrada",
-                Toast.LENGTH_SHORT
-            ).show()
-
-        }
-
     }
-
 }
