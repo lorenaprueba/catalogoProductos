@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.catalogoproductos.R
+import androidx.navigation.findNavController
 
 class ProfileFragment : Fragment() {
 
@@ -102,11 +103,12 @@ class ProfileFragment : Fragment() {
 
         btnFavoritos.setOnClickListener {
 
-            Toast.makeText(
-                requireContext(),
-                "Favoritos en desarrollo",
-                Toast.LENGTH_SHORT
-            ).show()
+            btnFavoritos.setOnClickListener {
+
+                view.findNavController()
+                    .navigate(R.id.favoritosFragment)
+
+            }
 
         }
 
