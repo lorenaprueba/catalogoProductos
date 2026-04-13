@@ -46,80 +46,68 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Historial de Compras"
-            android:layout_marginBottom="8dp" />
-
-        <TextView
-            android:id="@+id/txtHistorialTitulo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Historial de Compras"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
-            android:visibility="gone"/>
+            android:layout_marginBottom="12dp" />
 
         <LinearLayout
-            android:id="@+id/itemHistorialA"
+            android:id="@+id/layoutHistorial"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp"
-            android:visibility="gone">
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginBottom="16dp">
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Perfume A - Edición Premium"/>
-
-            <Button
-                android:id="@+id/btnRecomprarA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Comprar de nuevo"/>
-        </LinearLayout>
+                android:text="Coco Chanel"
+                android:textSize="16sp" />
 
-        <LinearLayout
-            android:id="@+id/itemHistorialB"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp"
-            android:visibility="gone">
+            <Button
+                android:id="@+id/btnComprar1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Comprar de nuevo"
+                android:layout_marginBottom="8dp" />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Cologne B - Fresh Breeze"/>
-
-            <Button
-                android:id="@+id/btnRecomprarB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Comprar de nuevo"/>
-        </LinearLayout>
+                android:text="Boss"
+                android:textSize="16sp" />
 
-        <LinearLayout
-            android:id="@+id/itemHistorialC"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp"
-            android:visibility="gone">
+            <Button
+                android:id="@+id/btnComprar2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Comprar de nuevo"
+                android:layout_marginBottom="8dp" />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Fragancia C - Elegante"/>
-
-            <Button
-                android:id="@+id/btnRecomprarC"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Comprar de nuevo"/>
+                android:text="Dior Homme"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btnComprar3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Comprar de nuevo"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Guess for Women"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btnComprar4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Comprar de nuevo"
+                android:layout_marginBottom="8dp" />
+
         </LinearLayout>
 
         <Button
@@ -127,7 +115,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Mis Favoritos"
-            android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp" />
 
         <Button
