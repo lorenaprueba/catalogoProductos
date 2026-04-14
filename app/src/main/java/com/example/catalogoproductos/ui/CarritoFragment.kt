@@ -119,9 +119,9 @@ class CarritoFragment : Fragment() {
     }
 
     private fun addSampleProducts() {
-        cartProducts.add(Product(1, "Perfume A - Edición Premium", 180000.0, 1))
-        cartProducts.add(Product(2, "Cologne B - Fresh Breeze", 70000.0, 2))
-        cartProducts.add(Product(3, "Fragancia C - Elegante", 120000.0, 1))
+        cartProducts.add(Product(1, "Coco Chanel", 300000.0, 1))
+        cartProducts.add(Product(2, "Dior Home", 350000.0, 2))
+        cartProducts.add(Product(3, "Boss", 245000.0, 1))
 
         cartAdapter.notifyDataSetChanged()
         updateTotals()
