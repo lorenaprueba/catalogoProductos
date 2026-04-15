@@ -1,5 +1,8 @@
 package com.example.catalogoproductos.ui
 
+/**
+ * Fragmento de Inicio optimizado: Gestión de video local con portada y navegación mejorada.
+ */
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
