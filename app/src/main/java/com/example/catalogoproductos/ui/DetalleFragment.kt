@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
-import com.example.catalogoproductos.models.Carrito
+import com.example.catalogoproductos.data.CartRepository
 import com.example.catalogoproductos.models.Producto
 import com.example.catalogoproductos.databinding.FragmentDetalleBinding
 
@@ -38,7 +38,7 @@ class DetalleFragment : Fragment() {
         binding.imgDetalle.setImageResource(imagen)
 
         binding.btnAgregarDetalle.setOnClickListener {
-            Carrito.agregar(producto)
+            CartRepository(requireContext()).agregarAlCarrito(producto)
 
             Toast.makeText(requireContext(), "Agregado al carrito", Toast.LENGTH_SHORT).show()
         }
