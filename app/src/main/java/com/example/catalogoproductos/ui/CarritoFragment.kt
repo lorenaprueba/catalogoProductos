@@ -11,8 +11,9 @@ import android.view.Window
 import androidx.fragment.app.Fragment
 import com.example.catalogoproductos.R
 import com.example.catalogoproductos.adapters.CartAdapter
+import com.example.catalogoproductos.data.CartRepository
 import com.example.catalogoproductos.databinding.FragmentCarritoBinding
-import com.example.catalogoproductos.models.Product
+import com.example.catalogoproductos.models.CartItem
 
 class CarritoFragment : Fragment() {
 
@@ -20,7 +21,8 @@ class CarritoFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var cartAdapter: CartAdapter
-    private val cartProducts = mutableListOf<Product>()
+    private val cartItems = mutableListOf<CartItem>()
+    private lateinit var repository: CartRepository
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,24 +35,42 @@ class CarritoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        repository = CartRepository(requireContext())
+
         setupRecyclerView()
         setupCheckoutButton()
-        addSampleProducts()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        cargarCarrito()
     }
 
     private fun setupRecyclerView() {
         cartAdapter = CartAdapter(
-            cartProducts,
-            onQuantityChanged = { updateTotals() },
-            onProductRemoved = { updateTotals() }
+            cartItems,
+            onQuantityChanged = { item ->
+                repository.actualizarCantidad(item.id, item.cantidad)
+                updateTotals()
+            },
+            onProductRemoved = { item ->
+                repository.eliminarItem(item.id)
+                updateTotals()
+            }
         )
-
         binding.cartRecyclerView.adapter = cartAdapter
+    }
+
+    private fun cargarCarrito() {
+        cartItems.clear()
+        cartItems.addAll(repository.obtenerCarrito())
+        cartAdapter.notifyDataSetChanged()
+        updateTotals()
     }
 
     private fun setupCheckoutButton() {
         binding.checkoutButton.setOnClickListener {
-            if (cartProducts.isEmpty()) {
+            if (cartItems.isEmpty()) {
                 showEmptyCartDialog()
             } else {
                 showConfirmPurchaseDialog()
@@ -72,8 +92,8 @@ class CarritoFragment : Fragment() {
     }
 
     private fun showConfirmPurchaseDialog() {
-        val totalAmount = cartProducts.sumOf { it.getTotalPrice() }
-        val itemCount = cartProducts.sumOf { it.quantity }
+        val totalAmount = cartItems.sumOf { it.total() }
+        val itemCount = cartItems.sumOf { it.cantidad }
 
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -88,11 +108,14 @@ class CarritoFragment : Fragment() {
         dialog.findViewById<View>(R.id.btnConfirm).setOnClickListener {
             dialog.dismiss()
 
-            cartProducts.clear()
+            val orderId = repository.confirmarCompra()
+            cartItems.clear()
             cartAdapter.notifyDataSetChanged()
             updateTotals()
 
-            showPurchaseSuccessDialog(totalAmount)
+            if (orderId > 0) {
+                showPurchaseSuccessDialog(totalAmount)
+            }
         }
 
         dialog.findViewById<View>(R.id.btnCancel).setOnClickListener {
@@ -118,23 +141,14 @@ class CarritoFragment : Fragment() {
         dialog.show()
     }
 
-    private fun addSampleProducts() {
-        cartProducts.add(Product(1, "Coco Chanel", 300000.0, 1))
-        cartProducts.add(Product(2, "Dior Home", 350000.0, 2))
-        cartProducts.add(Product(3, "Boss", 245000.0, 1))
-
-        cartAdapter.notifyDataSetChanged()
-        updateTotals()
-    }
-
     private fun updateTotals() {
-        val itemCount = cartProducts.sumOf { it.quantity }
-        val totalPrice = cartProducts.sumOf { it.getTotalPrice() }
+        val itemCount = cartItems.sumOf { it.cantidad }
+        val totalPrice = cartItems.sumOf { it.total() }
 
         binding.totalItems.text = "Total de artículos: $itemCount"
         binding.totalPrice.text = "Total: $ ${String.format("%,.0f", totalPrice)}"
 
-        if (cartProducts.isEmpty()) {
+        if (cartItems.isEmpty()) {
             binding.emptyCartText.visibility = View.VISIBLE
             binding.cartRecyclerView.visibility = View.GONE
         } else {

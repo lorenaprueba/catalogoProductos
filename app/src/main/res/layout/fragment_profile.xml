@@ -57,56 +57,20 @@
             android:layout_marginBottom="16dp">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Coco Chanel"
-                android:textSize="16sp" />
-
-            <Button
-                android:id="@+id/btnComprar1"
+                android:id="@+id/txtHistorialVacio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Comprar de nuevo"
-                android:layout_marginBottom="8dp" />
+                android:gravity="center"
+                android:padding="16dp"
+                android:textColor="#666666"
+                android:text="Aún no tienes compras registradas"
+                android:visibility="gone" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Boss"
-                android:textSize="16sp" />
-
-            <Button
-                android:id="@+id/btnComprar2"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvHistorial"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Comprar de nuevo"
-                android:layout_marginBottom="8dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dior Homme"
-                android:textSize="16sp" />
-
-            <Button
-                android:id="@+id/btnComprar3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Comprar de nuevo"
-                android:layout_marginBottom="8dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Guess for Women"
-                android:textSize="16sp" />
-
-            <Button
-                android:id="@+id/btnComprar4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Comprar de nuevo"
-                android:layout_marginBottom="8dp" />
+                android:nestedScrollingEnabled="false" />
 
         </LinearLayout>
 

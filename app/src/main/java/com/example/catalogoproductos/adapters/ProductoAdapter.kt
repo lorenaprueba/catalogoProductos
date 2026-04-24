@@ -6,8 +6,8 @@ import android.widget.*
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.catalogoproductos.R
+import com.example.catalogoproductos.data.CartRepository
 import com.example.catalogoproductos.models.Producto
-import com.example.catalogoproductos.models.Carrito
 import com.example.catalogoproductos.ui.DetalleFragment
 
 class ProductoAdapter(
@@ -71,7 +71,7 @@ class ProductoAdapter(
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                Carrito.agregar(producto)
+                CartRepository(holder.itemView.context).agregarAlCarrito(producto)
                 Toast.makeText(
                     holder.itemView.context,
                     "Agregado al carrito",
@@ -82,7 +82,7 @@ class ProductoAdapter(
 
         // ELIMINAR
         holder.btnEliminar.setOnClickListener {
-            Carrito.eliminar(producto)
+            CartRepository(holder.itemView.context).eliminarPorProducto(producto)
             lista.removeAt(position)
             notifyItemRemoved(position)
         }
