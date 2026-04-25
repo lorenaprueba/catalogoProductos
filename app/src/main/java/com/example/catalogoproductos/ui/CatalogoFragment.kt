@@ -31,10 +31,10 @@ class CatalogoFragment : Fragment(R.layout.fragment_catalogo) {
 
         // Lista de productos
         listaOriginal = listOf(
-            Producto("Coco Chanel", "Chanel", 300000.0, R.drawable.chanel, "Sumérgete en la sofisticación pura con este icónico perfume de Chanel, una fragancia que encarna la esencia del lujo y la feminidad. Su delicada mezcla de notas \n", listOf("femenino")),
-            Producto("Boss", "Hugo Boss", 245000.0, R.drawable.boss, "Una fragancia intensa y elegante que combina frescura y carácter. Perfecta para quienes proyectan seguridad, estilo y una presencia inolvidable en cualquier ocasión", listOf("masculino")),
-            Producto("Dior Home", "Dior", 350000.0, R.drawable.dior, "Una fragancia sofisticada y envolvente que combina notas amaderadas con un toque moderno. Ideal para hombres seguros, con estilo y personalidad refinada.", listOf("masculino")),
-            Producto("Guess for women", "Guess", 250000.0, R.drawable.guess, "Una fragancia juvenil y femenina que combina notas frescas y dulces, perfecta para resaltar tu encanto natural con un toque moderno y sofisticado.", listOf("femenino"))
+            Producto("Coco Chanel", "Chanel", 300000.0, R.drawable.chanel, "Sumérgete en la sofisticación pura con este icónico perfume de Chanel, una fragancia que encarna la esencia del lujo y la feminidad. Su delicada mezcla de notas \n", listOf("femenino"), id = 1),
+            Producto("Boss", "Hugo Boss", 245000.0, R.drawable.boss, "Una fragancia intensa y elegante que combina frescura y carácter. Perfecta para quienes proyectan seguridad, estilo y una presencia inolvidable en cualquier ocasión", listOf("masculino"), id = 2),
+            Producto("Dior Home", "Dior", 350000.0, R.drawable.dior, "Una fragancia sofisticada y envolvente que combina notas amaderadas con un toque moderno. Ideal para hombres seguros, con estilo y personalidad refinada.", listOf("masculino"), id = 3),
+            Producto("Guess for women", "Guess", 250000.0, R.drawable.guess, "Una fragancia juvenil y femenina que combina notas frescas y dulces, perfecta para resaltar tu encanto natural con un toque moderno y sofisticado.", listOf("femenino"), id = 4)
         )
 
         listaFiltrada = listaOriginal.toMutableList()

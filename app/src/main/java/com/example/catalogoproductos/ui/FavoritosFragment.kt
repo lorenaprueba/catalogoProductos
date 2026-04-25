@@ -4,102 +4,59 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.catalogoproductos.R
+import com.example.catalogoproductos.adapters.FavoritosAdapter
+import com.example.catalogoproductos.data.FavoritoDao
 
 class FavoritosFragment : Fragment() {
+
+    private lateinit var dao:      FavoritoDao
+    private lateinit var adapter:  FavoritosAdapter
+    private lateinit var recycler: RecyclerView
+    private lateinit var tvVacio:  TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
-        return inflater.inflate(
-            R.layout.fragment_favoritos,
-            container,
-            false
-        )
-
-    }
+    ): View = inflater.inflate(R.layout.fragment_favoritos, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        dao      = FavoritoDao(requireContext())
+        recycler = view.findViewById(R.id.recycler_favoritos)
+        tvVacio  = view.findViewById(R.id.tv_sin_favoritos)
+        recycler.layoutManager = LinearLayoutManager(requireContext())
+        cargarFavoritos()
+    }
 
-        val layout1 =
-            view.findViewById<LinearLayout>(R.id.layoutFavorito1)
+    // Se ejecuta cada vez que el usuario vuelve del catálogo
+    override fun onResume() {
+        super.onResume()
+        if (::dao.isInitialized) cargarFavoritos()
+    }
 
-        val layout2 =
-            view.findViewById<LinearLayout>(R.id.layoutFavorito2)
+    private fun cargarFavoritos() {
+        val lista = dao.obtenerTodos().toMutableList()
 
-        val layout3 =
-            view.findViewById<LinearLayout>(R.id.layoutFavorito3)
+        adapter = FavoritosAdapter(
+            lista      = lista,
+            onEliminar = { producto, position ->
+                dao.eliminar(producto.id.toString())
+                adapter.eliminarEn(position)
+                mostrarVacio(adapter.itemCount == 0)
+            }
+        )
+        recycler.adapter = adapter
+        mostrarVacio(lista.isEmpty())
+    }
 
-        val layout4 =
-            view.findViewById<LinearLayout>(R.id.layoutFavorito4)
-
-        val btn1 =
-            view.findViewById<Button>(R.id.btnEliminar1)
-
-        val btn2 =
-            view.findViewById<Button>(R.id.btnEliminar2)
-
-        val btn3 =
-            view.findViewById<Button>(R.id.btnEliminar3)
-
-        val btn4 =
-            view.findViewById<Button>(R.id.btnEliminar4)
-
-        btn1.setOnClickListener {
-
-            layout1.visibility = View.GONE
-
-            Toast.makeText(
-                requireContext(),
-                "Coco Chanel eliminado",
-                Toast.LENGTH_SHORT
-            ).show()
-
-        }
-
-        btn2.setOnClickListener {
-
-            layout2.visibility = View.GONE
-
-            Toast.makeText(
-                requireContext(),
-                "Boss eliminado",
-                Toast.LENGTH_SHORT
-            ).show()
-
-        }
-
-        btn3.setOnClickListener {
-
-            layout3.visibility = View.GONE
-
-            Toast.makeText(
-                requireContext(),
-                "Dior Homme eliminado",
-                Toast.LENGTH_SHORT
-            ).show()
-
-        }
-
-        btn4.setOnClickListener {
-
-            layout4.visibility = View.GONE
-
-            Toast.makeText(
-                requireContext(),
-                "Guess for Women eliminado",
-                Toast.LENGTH_SHORT
-            ).show()
-
-        }
-
+    private fun mostrarVacio(vacio: Boolean) {
+        tvVacio.visibility  = if (vacio) View.VISIBLE else View.GONE
+        recycler.visibility = if (vacio) View.GONE    else View.VISIBLE
     }
 }
