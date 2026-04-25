@@ -1,9 +1,12 @@
+
 package com.example.catalogoproductos.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,18 +34,27 @@ class CatalogoFragment : Fragment(R.layout.fragment_catalogo) {
 
         // Lista de productos
         listaOriginal = listOf(
-            Producto("Coco Chanel", "Chanel", 300000.0, R.drawable.chanel, "Sumérgete en la sofisticación pura con este icónico perfume de Chanel, una fragancia que encarna la esencia del lujo y la feminidad. Su delicada mezcla de notas \n", listOf("femenino"), id = 1),
-            Producto("Boss", "Hugo Boss", 245000.0, R.drawable.boss, "Una fragancia intensa y elegante que combina frescura y carácter. Perfecta para quienes proyectan seguridad, estilo y una presencia inolvidable en cualquier ocasión", listOf("masculino"), id = 2),
-            Producto("Dior Home", "Dior", 350000.0, R.drawable.dior, "Una fragancia sofisticada y envolvente que combina notas amaderadas con un toque moderno. Ideal para hombres seguros, con estilo y personalidad refinada.", listOf("masculino"), id = 3),
-            Producto("Guess for women", "Guess", 250000.0, R.drawable.guess, "Una fragancia juvenil y femenina que combina notas frescas y dulces, perfecta para resaltar tu encanto natural con un toque moderno y sofisticado.", listOf("femenino"), id = 4)
+            Producto("Coco Chanel", "Chanel", 300000.0, R.drawable.chanel, "Sumérgete en la sofisticación pura con este icónico perfume de Chanel.", listOf("femenino"), id = 1),
+            Producto("Boss", "Hugo Boss", 245000.0, R.drawable.boss, "Una fragancia intensa y elegante.", listOf("masculino"), id = 2),
+            Producto("Dior Home", "Dior", 350000.0, R.drawable.dior, "Fragancia sofisticada y envolvente.", listOf("masculino"), id = 3),
+            Producto("Guess for women", "Guess", 250000.0, R.drawable.guess, "Fragancia juvenil y femenina.", listOf("femenino"), id = 4)
         )
 
         listaFiltrada = listaOriginal.toMutableList()
 
-        adapter = ProductoAdapter(listaFiltrada)
-
-        recycler.layoutManager = GridLayoutManager(requireContext(), 2)
-        recycler.adapter = adapter
+        // VALIDACIÓN + TRY CATCH
+        if (listaFiltrada.isEmpty()) {
+            Toast.makeText(requireContext(), "No hay productos disponibles", Toast.LENGTH_SHORT).show()
+        } else {
+            try {
+                adapter = ProductoAdapter(listaFiltrada)
+                recycler.layoutManager = GridLayoutManager(requireContext(), 2)
+                recycler.adapter = adapter
+            } catch (e: Exception) {
+                Log.e("Catalogo", "Error al cargar productos", e)
+                Toast.makeText(requireContext(), "Error al mostrar productos", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         // BUSCAR
         edtBuscar.addTextChangedListener(object : android.text.TextWatcher {
@@ -57,6 +69,11 @@ class CatalogoFragment : Fragment(R.layout.fragment_catalogo) {
         btnTodos.setOnClickListener {
             listaFiltrada.clear()
             listaFiltrada.addAll(listaOriginal)
+
+            if (listaFiltrada.isEmpty()) {
+                Toast.makeText(requireContext(), "No hay productos", Toast.LENGTH_SHORT).show()
+            }
+
             adapter.notifyDataSetChanged()
         }
 
@@ -81,6 +98,10 @@ class CatalogoFragment : Fragment(R.layout.fragment_catalogo) {
             }
         }
 
+        if (listaFiltrada.isEmpty()) {
+            Toast.makeText(requireContext(), "No se encontraron resultados", Toast.LENGTH_SHORT).show()
+        }
+
         adapter.notifyDataSetChanged()
     }
 
@@ -92,6 +113,10 @@ class CatalogoFragment : Fragment(R.layout.fragment_catalogo) {
             if (producto.notas.contains(categoria)) {
                 listaFiltrada.add(producto)
             }
+        }
+
+        if (listaFiltrada.isEmpty()) {
+            Toast.makeText(requireContext(), "No hay productos en esta categoría", Toast.LENGTH_SHORT).show()
         }
 
         adapter.notifyDataSetChanged()
