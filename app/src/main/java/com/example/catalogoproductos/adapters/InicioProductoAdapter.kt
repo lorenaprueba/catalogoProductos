@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.fragment.app.FragmentActivity
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.catalogoproductos.R
 import com.example.catalogoproductos.models.Producto
@@ -43,15 +43,7 @@ class InicioProductoAdapter(private val lista: List<Producto>) :
                 putInt("imagen", producto.imagen)
             }
 
-            val fragment = DetalleFragment()
-            fragment.arguments = bundle
-
-            // Obtenemos la actividad para realizar la transacción del fragmento
-            val activity = holder.itemView.context as FragmentActivity
-            activity.supportFragmentManager.beginTransaction()
-                .replace(R.id.nav_host_fragment, fragment)
-                .addToBackStack(null)
-                .commit()
+            holder.itemView.findNavController().navigate(R.id.detalleFragment, bundle)
         }
     }
 

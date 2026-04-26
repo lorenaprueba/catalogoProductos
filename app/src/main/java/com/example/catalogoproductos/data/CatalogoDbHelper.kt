@@ -17,7 +17,8 @@ class CatalogoDbHelper(context: Context) :
                 $COL_PRECIO REAL NOT NULL,
                 $COL_IMAGEN INTEGER NOT NULL,
                 $COL_CANTIDAD INTEGER NOT NULL,
-                UNIQUE($COL_NOMBRE, $COL_MARCA)
+                $COL_EMAIL TEXT NOT NULL,
+                UNIQUE($COL_NOMBRE, $COL_MARCA, $COL_EMAIL)
             )
             """.trimIndent()
         )
@@ -28,7 +29,22 @@ class CatalogoDbHelper(context: Context) :
                 $COL_ORDER_ID INTEGER PRIMARY KEY AUTOINCREMENT,
                 $COL_ORDER_FECHA INTEGER NOT NULL,
                 $COL_ORDER_TOTAL REAL NOT NULL,
-                $COL_ORDER_ITEMS_COUNT INTEGER NOT NULL
+                $COL_ORDER_ITEMS_COUNT INTEGER NOT NULL,
+                $COL_EMAIL TEXT NOT NULL
+            )
+            """.trimIndent()
+        )
+
+        db.execSQL(
+            """
+            CREATE TABLE $TABLE_FAVORITES (
+                $COL_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                $COL_NOMBRE TEXT NOT NULL,
+                $COL_MARCA TEXT NOT NULL,
+                $COL_PRECIO REAL NOT NULL,
+                $COL_IMAGEN INTEGER NOT NULL,
+                $COL_EMAIL TEXT NOT NULL,
+                UNIQUE($COL_NOMBRE, $COL_MARCA, $COL_EMAIL)
             )
             """.trimIndent()
         )
@@ -53,6 +69,7 @@ class CatalogoDbHelper(context: Context) :
         db.execSQL("DROP TABLE IF EXISTS $TABLE_ORDER_ITEMS")
         db.execSQL("DROP TABLE IF EXISTS $TABLE_ORDERS")
         db.execSQL("DROP TABLE IF EXISTS $TABLE_CART")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_FAVORITES")
         onCreate(db)
     }
 
@@ -63,7 +80,9 @@ class CatalogoDbHelper(context: Context) :
 
     companion object {
         const val DB_NAME = "catalogo.db"
-        const val DB_VERSION = 2
+        const val DB_VERSION = 4
+
+        const val COL_EMAIL = "email"
 
         const val TABLE_CART = "cart_items"
         const val COL_ID = "id"
@@ -72,6 +91,8 @@ class CatalogoDbHelper(context: Context) :
         const val COL_PRECIO = "precio"
         const val COL_IMAGEN = "imagen"
         const val COL_CANTIDAD = "cantidad"
+
+        const val TABLE_FAVORITES = "favorites"
 
         const val TABLE_ORDERS = "orders"
         const val COL_ORDER_ID = "id"

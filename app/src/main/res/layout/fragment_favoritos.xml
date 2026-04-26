@@ -1,115 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
     android:background="#FAFAFA">
 
-    <LinearLayout
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mis Favoritos"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/txtNoFavoritos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:text="Aún no tienes favoritos."
+        android:textSize="16sp"
+        android:visibility="gone"
+        android:layout_marginTop="32dp"
+        android:textAlignment="center"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mis Favoritos"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="16dp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFavoritos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="100dp" />
 
-        <!-- Coco Chanel -->
-
-        <LinearLayout
-            android:id="@+id/layoutFavorito1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Coco Chanel"
-                android:textSize="16sp" />
-
-            <Button
-                android:id="@+id/btnEliminar1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Eliminar de favoritos"
-                android:layout_marginBottom="12dp" />
-
-        </LinearLayout>
-
-        <!-- Boss -->
-
-        <LinearLayout
-            android:id="@+id/layoutFavorito2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Boss"
-                android:textSize="16sp" />
-
-            <Button
-                android:id="@+id/btnEliminar2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Eliminar de favoritos"
-                android:layout_marginBottom="12dp" />
-
-        </LinearLayout>
-
-        <!-- Dior Homme -->
-
-        <LinearLayout
-            android:id="@+id/layoutFavorito3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dior Homme"
-                android:textSize="16sp" />
-
-            <Button
-                android:id="@+id/btnEliminar3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Eliminar de favoritos"
-                android:layout_marginBottom="12dp" />
-
-        </LinearLayout>
-
-        <!-- Guess for Women -->
-
-        <LinearLayout
-            android:id="@+id/layoutFavorito4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Guess for Women"
-                android:textSize="16sp" />
-
-            <Button
-                android:id="@+id/btnEliminar4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Eliminar de favoritos"
-                android:layout_marginBottom="12dp" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>

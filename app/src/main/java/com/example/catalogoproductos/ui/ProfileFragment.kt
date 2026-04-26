@@ -1,10 +1,11 @@
 package com.example.catalogoproductos.ui
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -38,16 +39,31 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         repository = CartRepository(requireContext())
+        val sharedPref = requireContext().getSharedPreferences("USER_PREFS", Context.MODE_PRIVATE)
+        val userEmail = sharedPref.getString("user_email", "usuario@gmail.com")
 
-        val btnHistorial = view.findViewById<Button>(R.id.btnHistorial)
-        val btnFavoritos = view.findViewById<Button>(R.id.btnFavoritos)
+        val txtNombre = view.findViewById<TextView>(R.id.txtNombre)
+        val txtCorreo = view.findViewById<TextView>(R.id.txtCorreo)
+        val txtStatPedidos = view.findViewById<TextView>(R.id.txtStatPedidos)
+        val txtStatFavoritos = view.findViewById<TextView>(R.id.txtStatFavoritos)
+        val txtStatPuntos = view.findViewById<TextView>(R.id.txtStatPuntos)
+
+        val btnRowHistorial = view.findViewById<LinearLayout>(R.id.btnRowHistorial)
+        val btnRowCerrarSesion = view.findViewById<LinearLayout>(R.id.btnRowCerrarSesion)
+        
+        val txtMisFavoritosLabel = view.findViewById<TextView>(R.id.txtMisFavoritosLabel)
+        val layoutFavoritosContainer = view.findViewById<LinearLayout>(R.id.layoutFavoritosContainer)
+
         layoutHistorial = view.findViewById(R.id.layoutHistorial)
         rvHistorial = view.findViewById(R.id.rvHistorial)
         txtHistorialVacio = view.findViewById(R.id.txtHistorialVacio)
 
+        txtNombre.text = "Lucia Hernandez" // Dummy name
+        txtCorreo.text = userEmail
+
         setupHistorialRecyclerView()
 
-        btnHistorial.setOnClickListener {
+        btnRowHistorial.setOnClickListener {
             if (layoutHistorial.visibility == View.GONE) {
                 cargarHistorial()
                 layoutHistorial.visibility = View.VISIBLE
@@ -56,9 +72,25 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        btnFavoritos.setOnClickListener {
+
+        txtMisFavoritosLabel.setOnClickListener {
             view.findNavController().navigate(R.id.favoritosFragment)
         }
+
+        layoutFavoritosContainer.setOnClickListener {
+            view.findNavController().navigate(R.id.favoritosFragment)
+        }
+
+        btnRowCerrarSesion.setOnClickListener {
+            sharedPref.edit().clear().apply()
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        }
+
+        cargarStats(txtStatPedidos, txtStatPuntos)
+        // Favoritos dinámicos
+        cargarFavoritosUI(view)
     }
 
     override fun onResume() {
@@ -67,6 +99,13 @@ class ProfileFragment : Fragment() {
             layoutHistorial.visibility == View.VISIBLE
         ) {
             cargarHistorial()
+        }
+        val view = this.view
+        if (view != null) {
+            val txtStatPedidos = view.findViewById<TextView>(R.id.txtStatPedidos)
+            val txtStatPuntos = view.findViewById<TextView>(R.id.txtStatPuntos)
+            cargarStats(txtStatPedidos, txtStatPuntos)
+            cargarFavoritosUI(view)
         }
     }
 
@@ -98,6 +137,50 @@ class ProfileFragment : Fragment() {
         } else {
             txtHistorialVacio.visibility = View.GONE
             rvHistorial.visibility = View.VISIBLE
+        }
+    }
+
+    private fun cargarStats(txtStatPedidos: TextView, txtStatPuntos: TextView) {
+        val totalOrdenes = repository.obtenerOrdenes()
+        txtStatPedidos.text = totalOrdenes.size.toString()
+        
+        var puntosTotales = 0
+        for (orden in totalOrdenes) {
+            puntosTotales += ((orden.total / 1000) * 4).toInt()
+        }
+        
+        txtStatPuntos.text = String.format("%,d", puntosTotales).replace(',', '.')
+    }
+
+    private fun cargarFavoritosUI(view: View) {
+        val favoritos = repository.obtenerFavoritos()
+        val txtStatFavoritos = view.findViewById<TextView>(R.id.txtStatFavoritos)
+        txtStatFavoritos.text = favoritos.size.toString()
+
+        val containers = listOf(
+            view.findViewById<LinearLayout>(R.id.containerFav1),
+            view.findViewById<LinearLayout>(R.id.containerFav2),
+            view.findViewById<LinearLayout>(R.id.containerFav3)
+        )
+        val images = listOf(
+            view.findViewById<android.widget.ImageView>(R.id.imgFav1),
+            view.findViewById<android.widget.ImageView>(R.id.imgFav2),
+            view.findViewById<android.widget.ImageView>(R.id.imgFav3)
+        )
+        val texts = listOf(
+            view.findViewById<TextView>(R.id.txtFav1),
+            view.findViewById<TextView>(R.id.txtFav2),
+            view.findViewById<TextView>(R.id.txtFav3)
+        )
+
+        for (i in 0..2) {
+            if (i < favoritos.size) {
+                containers[i].visibility = View.VISIBLE
+                images[i].setImageResource(favoritos[i].imagen)
+                texts[i].text = favoritos[i].nombre
+            } else {
+                containers[i].visibility = View.INVISIBLE
+            }
         }
     }
 }

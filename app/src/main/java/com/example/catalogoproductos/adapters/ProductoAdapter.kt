@@ -3,7 +3,7 @@ package com.example.catalogoproductos.adapters
 import android.os.Bundle
 import android.view.*
 import android.widget.*
-import androidx.fragment.app.FragmentActivity
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.catalogoproductos.R
 import com.example.catalogoproductos.data.CartRepository
@@ -14,6 +14,8 @@ class ProductoAdapter(
     private val lista: MutableList<Producto>,
     private val esCarrito: Boolean = false
 ) : RecyclerView.Adapter<ProductoAdapter.ViewHolder>() {
+
+    var onFavoriteClick: ((Producto, Boolean) -> Unit)? = null
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val nombre: TextView = view.findViewById(R.id.txtNombre)
@@ -40,17 +42,20 @@ class ProductoAdapter(
         holder.precio.text = "$${producto.precio}"
         holder.imagen.setImageResource(producto.imagen)
 
-        var esFavorito = false
+        if (producto.esFavorito) {
+            holder.btnFavorito.setImageResource(R.drawable.ic_favorite)
+        } else {
+            holder.btnFavorito.setImageResource(R.drawable.ic_favorite_border)
+        }
 
         holder.btnFavorito.setOnClickListener {
-
-            esFavorito = !esFavorito
-
-            if (esFavorito) {
+            producto.esFavorito = !producto.esFavorito
+            if (producto.esFavorito) {
                 holder.btnFavorito.setImageResource(R.drawable.ic_favorite)
             } else {
                 holder.btnFavorito.setImageResource(R.drawable.ic_favorite_border)
             }
+            onFavoriteClick?.invoke(producto, producto.esFavorito)
         }
 
         if (esCarrito) {
@@ -97,15 +102,7 @@ class ProductoAdapter(
                 putInt("imagen", producto.imagen)
             }
 
-            val fragment = DetalleFragment()
-            fragment.arguments = bundle
-
-            val activity = holder.itemView.context as FragmentActivity
-
-            activity.supportFragmentManager.beginTransaction()
-                .replace(R.id.nav_host_fragment, fragment)
-                .addToBackStack(null)
-                .commit()
+            holder.itemView.findNavController().navigate(R.id.detalleFragment, bundle)
         }
     }
 }

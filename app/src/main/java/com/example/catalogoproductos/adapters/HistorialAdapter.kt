@@ -30,6 +30,9 @@ class HistorialAdapter(
                 "$ ${String.format("%,.0f", order.total)}"
             binding.txtOrdenItemsCount.text =
                 "${order.itemsCount} artículo${if (order.itemsCount == 1) "" else "s"}"
+            
+            val puntos = ((order.total / 1000) * 4).toInt()
+            binding.txtOrdenPuntos.text = "Puntos ganados: $puntos"
 
             binding.layoutOrdenItems.removeAllViews()
             val items = itemsProvider(order.id)

@@ -9,9 +9,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.catalogoproductos.R
 import com.example.catalogoproductos.adapters.ProductoAdapter
+import com.example.catalogoproductos.data.CartRepository
 import com.example.catalogoproductos.models.Producto
 
 class CatalogoFragment : Fragment(R.layout.fragment_catalogo) {
+
+    private lateinit var repository: CartRepository
 
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: ProductoAdapter
@@ -37,9 +40,21 @@ class CatalogoFragment : Fragment(R.layout.fragment_catalogo) {
             Producto("Guess for women", "Guess", 250000.0, R.drawable.guess, "Una fragancia juvenil y femenina que combina notas frescas y dulces, perfecta para resaltar tu encanto natural con un toque moderno y sofisticado.", listOf("femenino"))
         )
 
+        repository = CartRepository(requireContext())
+        listaOriginal.forEach { producto ->
+            producto.esFavorito = repository.esFavorito(producto.nombre, producto.marca)
+        }
+
         listaFiltrada = listaOriginal.toMutableList()
 
         adapter = ProductoAdapter(listaFiltrada)
+        adapter.onFavoriteClick = { producto, isFavorite ->
+            if (isFavorite) {
+                repository.agregarFavorito(producto)
+            } else {
+                repository.eliminarFavorito(producto)
+            }
+        }
 
         recycler.layoutManager = GridLayoutManager(requireContext(), 2)
         recycler.adapter = adapter

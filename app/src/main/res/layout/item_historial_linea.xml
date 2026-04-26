@@ -12,13 +12,13 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textSize="13sp"
-        android:textColor="#333333" />
+        android:textColor="#AAAAAA" />
 
     <TextView
         android:id="@+id/txtLineaTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="13sp"
-        android:textColor="#333333" />
+        android:textColor="#AAAAAA" />
 
 </LinearLayout>
