@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="16dp">
+
+    <!-- Nombre del producto -->
+    <TextView
+        android:id="@+id/tv_nombre_fav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:layout_marginBottom="6dp"
+        android:text="Nombre producto"/>
+
+    <!-- Botón "Eliminar de favoritos" — morado, ancho completo, redondeado -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_eliminar_fav"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="Eliminar de favoritos"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:backgroundTint="#7B2FBE"
+        app:cornerRadius="24dp"/>
+
+</LinearLayout>

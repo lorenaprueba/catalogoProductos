@@ -4,102 +4,78 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.catalogoproductos.R
+import com.example.catalogoproductos.adapters.FavoritosAdapter
+import com.example.catalogoproductos.data.FavoritoDao
 
 class FavoritosFragment : Fragment() {
+
+    private lateinit var dao: FavoritoDao
+    private lateinit var adapter: FavoritosAdapter
+    private lateinit var recycler: RecyclerView
+    private lateinit var tvVacio: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
-        return inflater.inflate(
-            R.layout.fragment_favoritos,
-            container,
-            false
-        )
-
-    }
+    ): View = inflater.inflate(R.layout.fragment_favoritos, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val layout1 =
-            view.findViewById<LinearLayout>(R.id.layoutFavorito1)
+        dao = FavoritoDao(requireContext())
 
-        val layout2 =
-            view.findViewById<LinearLayout>(R.id.layoutFavorito2)
+        recycler = view.findViewById(R.id.recycler_favoritos)
+        tvVacio = view.findViewById(R.id.tv_sin_favoritos)
 
-        val layout3 =
-            view.findViewById<LinearLayout>(R.id.layoutFavorito3)
+        recycler.layoutManager = LinearLayoutManager(requireContext())
 
-        val layout4 =
-            view.findViewById<LinearLayout>(R.id.layoutFavorito4)
+        cargarFavoritos()
+    }
 
-        val btn1 =
-            view.findViewById<Button>(R.id.btnEliminar1)
-
-        val btn2 =
-            view.findViewById<Button>(R.id.btnEliminar2)
-
-        val btn3 =
-            view.findViewById<Button>(R.id.btnEliminar3)
-
-        val btn4 =
-            view.findViewById<Button>(R.id.btnEliminar4)
-
-        btn1.setOnClickListener {
-
-            layout1.visibility = View.GONE
-
-            Toast.makeText(
-                requireContext(),
-                "Coco Chanel eliminado",
-                Toast.LENGTH_SHORT
-            ).show()
-
+    // Se ejecuta cada vez que vuelves al fragment
+    override fun onResume() {
+        super.onResume()
+        if (::dao.isInitialized) {
+            cargarFavoritos()
         }
+    }
 
-        btn2.setOnClickListener {
+    private fun cargarFavoritos() {
+        try {
+            val lista = dao.obtenerTodos().toMutableList()
 
-            layout2.visibility = View.GONE
+            adapter = FavoritosAdapter(
+                lista = lista,
+                onEliminar = { producto, position ->
+                    dao.eliminar(producto.id.toString())
+                    adapter.eliminarEn(position)
 
-            Toast.makeText(
-                requireContext(),
-                "Boss eliminado",
-                Toast.LENGTH_SHORT
-            ).show()
+                    // Validar si quedó vacío después de eliminar
+                    mostrarVacio(adapter.itemCount == 0)
+                }
+            )
 
+            recycler.adapter = adapter
+
+            // VALIDACIÓN PRINCIPAL
+            mostrarVacio(lista.isEmpty())
+
+        } catch (e: Exception) {
+            // ERROR CONTROLADO
+            tvVacio.text = "Error al cargar favoritos"
+            tvVacio.visibility = View.VISIBLE
+            recycler.visibility = View.GONE
         }
+    }
 
-        btn3.setOnClickListener {
-
-            layout3.visibility = View.GONE
-
-            Toast.makeText(
-                requireContext(),
-                "Dior Homme eliminado",
-                Toast.LENGTH_SHORT
-            ).show()
-
-        }
-
-        btn4.setOnClickListener {
-
-            layout4.visibility = View.GONE
-
-            Toast.makeText(
-                requireContext(),
-                "Guess for Women eliminado",
-                Toast.LENGTH_SHORT
-            ).show()
-
-        }
-
+    private fun mostrarVacio(vacio: Boolean) {
+        tvVacio.visibility = if (vacio) View.VISIBLE else View.GONE
+        recycler.visibility = if (vacio) View.GONE else View.VISIBLE
     }
 }
