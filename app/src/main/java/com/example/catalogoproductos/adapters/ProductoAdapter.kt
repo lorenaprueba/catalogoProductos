@@ -9,6 +9,7 @@ import com.example.catalogoproductos.R
 import com.example.catalogoproductos.data.CartRepository
 import com.example.catalogoproductos.models.Producto
 import com.example.catalogoproductos.ui.DetalleFragment
+import com.example.catalogoproductos.data.FavoritoDao
 
 class ProductoAdapter(
     private val lista: MutableList<Producto>,
@@ -37,25 +38,31 @@ class ProductoAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val producto = lista[position]
+        val ctx      = holder.itemView.context
 
+        // ── Datos visuales (igual que antes) ──────────────────────────────
         holder.nombre.text = producto.nombre
         holder.precio.text = "$${producto.precio}"
         holder.imagen.setImageResource(producto.imagen)
 
-        if (producto.esFavorito) {
-            holder.btnFavorito.setImageResource(R.drawable.ic_favorite)
-        } else {
-            holder.btnFavorito.setImageResource(R.drawable.ic_favorite_border)
-        }
+        // ── CORAZÓN con SQLite ────────────────────────────────────────────
+        val dao = FavoritoDao(ctx)
 
-        holder.btnFavorito.setOnClickListener {
-            producto.esFavorito = !producto.esFavorito
-            if (producto.esFavorito) {
+        // Pintar estado inicial desde la BD
+        fun actualizarIcono() {
+            if (dao.esFavorito(producto.id.toString())) {
                 holder.btnFavorito.setImageResource(R.drawable.ic_favorite)
             } else {
                 holder.btnFavorito.setImageResource(R.drawable.ic_favorite_border)
             }
             onFavoriteClick?.invoke(producto, producto.esFavorito)
+        }
+
+        actualizarIcono()   // ← estado correcto al cargar la lista
+
+        holder.btnFavorito.setOnClickListener {
+            dao.toggle(producto)   // agrega o elimina de SQLite
+            actualizarIcono()      // refresca el ícono según el nuevo estado
         }
 
         if (esCarrito) {

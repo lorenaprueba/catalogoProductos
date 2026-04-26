@@ -1,4 +1,4 @@
-package com.example.catalogoproductos.models 
+package com.example.catalogoproductos.models
 
 data class Producto(
     val nombre: String,
@@ -7,5 +7,6 @@ data class Producto(
     val imagen: Int,
     val descripcion: String,
     val notas: List<String>,
-    var esFavorito: Boolean = false
+    var esFavorito: Boolean = false,
+    val id: Int = 0,
 )
