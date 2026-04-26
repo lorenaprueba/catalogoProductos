@@ -15,37 +15,90 @@ class DetalleFragment : Fragment() {
 
     private lateinit var producto: Producto
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+
         _binding = FragmentDetalleBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
+
         super.onViewCreated(view, savedInstanceState)
 
-        val nombre = arguments?.getString("nombre") ?: ""
-        val marca = arguments?.getString("marca") ?: ""
-        val precio = arguments?.getDouble("precio") ?: 0.0
-        val descripcion = arguments?.getString("descripcion") ?: ""
-        val imagen = arguments?.getInt("imagen") ?: 0
+        try {
 
-        producto = Producto(nombre, marca, precio, imagen, descripcion, listOf())
+            val nombre = arguments?.getString("nombre") ?: ""
+            val marca = arguments?.getString("marca") ?: ""
+            val precio = arguments?.getDouble("precio") ?: 0.0
+            val descripcion = arguments?.getString("descripcion") ?: ""
+            val imagen = arguments?.getInt("imagen") ?: 0
 
-        binding.txtNombreDetalle.text = nombre
-        binding.txtMarcaDetalle.text = marca
-        binding.txtPrecioDetalle.text = "$$precio"
-        binding.txtDescripcionDetalle.text = descripcion
-        binding.imgDetalle.setImageResource(imagen)
+            producto = Producto(
+                nombre,
+                marca,
+                precio,
+                imagen,
+                descripcion,
+                listOf()
+            )
+
+            binding.txtNombreDetalle.text = nombre
+            binding.txtMarcaDetalle.text = marca
+            binding.txtPrecioDetalle.text = "$$precio"
+            binding.txtDescripcionDetalle.text = descripcion
+            binding.imgDetalle.setImageResource(imagen)
+
+        }
+        catch (e: Exception) {
+
+            Toast.makeText(
+                requireContext(),
+                "Error al cargar detalle del producto",
+                Toast.LENGTH_SHORT
+            ).show()
+
+        }
 
         binding.btnAgregarDetalle.setOnClickListener {
-            CartRepository(requireContext()).agregarAlCarrito(producto)
 
-            Toast.makeText(requireContext(), "Agregado al carrito", Toast.LENGTH_SHORT).show()
+            try {
+
+                CartRepository(requireContext())
+                    .agregarAlCarrito(producto)
+
+                Toast.makeText(
+                    requireContext(),
+                    "Agregado al carrito",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
+            catch (e: Exception) {
+
+                Toast.makeText(
+                    requireContext(),
+                    "Error al agregar producto al carrito",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
+
         }
+
     }
 
     override fun onDestroyView() {
+
         super.onDestroyView()
         _binding = null
+
     }
+
 }
