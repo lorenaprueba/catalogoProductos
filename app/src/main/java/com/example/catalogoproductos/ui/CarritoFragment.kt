@@ -100,10 +100,14 @@ class CarritoFragment : Fragment() {
         dialog.setContentView(R.layout.dialog_confirm_purchase)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        val puntosAGanar = ((totalAmount / 1000) * 4).toInt()
+
         dialog.findViewById<android.widget.TextView>(R.id.dialogItemCount).text =
             "Artículos: $itemCount"
         dialog.findViewById<android.widget.TextView>(R.id.dialogTotalAmount).text =
             "Total: $ ${String.format("%,.0f", totalAmount)}"
+        dialog.findViewById<android.widget.TextView>(R.id.dialogPuntosAGanar).text =
+            "Puntos a ganar: $puntosAGanar"
 
         dialog.findViewById<View>(R.id.btnConfirm).setOnClickListener {
             dialog.dismiss()

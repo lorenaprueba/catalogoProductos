@@ -41,4 +41,9 @@
         android:label="Web"
         tools:layout="@layout/fragment_web" />
 
+    <fragment
+        android:id="@+id/detalleFragment"
+        android:name="com.example.catalogoproductos.ui.DetalleFragment"
+        android:label="Detalle" />
+
 </navigation>

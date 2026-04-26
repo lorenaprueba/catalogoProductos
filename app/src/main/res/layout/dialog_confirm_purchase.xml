@@ -47,6 +47,16 @@
         android:textSize="22sp"
         android:textStyle="bold"
         android:textColor="#2E7D32"
+        android:layout_marginBottom="4dp" />
+
+    <TextView
+        android:id="@+id/dialogPuntosAGanar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Puntos a ganar: 0"
+        android:textSize="14sp"
+        android:textColor="#2E7D32"
+        android:textStyle="bold"
         android:layout_marginBottom="8dp" />
 
     <TextView

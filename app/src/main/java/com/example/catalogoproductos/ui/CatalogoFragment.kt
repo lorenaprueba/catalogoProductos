@@ -12,9 +12,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.catalogoproductos.R
 import com.example.catalogoproductos.adapters.ProductoAdapter
+import com.example.catalogoproductos.data.CartRepository
 import com.example.catalogoproductos.models.Producto
 
 class CatalogoFragment : Fragment(R.layout.fragment_catalogo) {
+
+    private lateinit var repository: CartRepository
 
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: ProductoAdapter
@@ -40,6 +43,8 @@ class CatalogoFragment : Fragment(R.layout.fragment_catalogo) {
             Producto("Guess for women", "Guess", 250000.0, R.drawable.guess, "Fragancia juvenil y femenina.", listOf("femenino"), id = 4)
         )
 
+        repository = CartRepository(requireContext())
+
         listaFiltrada = listaOriginal.toMutableList()
 
         // VALIDACIÓN + TRY CATCH
@@ -55,6 +60,7 @@ class CatalogoFragment : Fragment(R.layout.fragment_catalogo) {
                 Toast.makeText(requireContext(), "Error al mostrar productos", Toast.LENGTH_SHORT).show()
             }
         }
+
 
         // BUSCAR
         edtBuscar.addTextChangedListener(object : android.text.TextWatcher {

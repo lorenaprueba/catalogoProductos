@@ -19,7 +19,9 @@ import com.example.catalogoproductos.data.CatalogoDbHelper.Companion.COL_ORDER_I
 import com.example.catalogoproductos.data.CatalogoDbHelper.Companion.COL_ORDER_ITEMS_COUNT
 import com.example.catalogoproductos.data.CatalogoDbHelper.Companion.COL_ORDER_TOTAL
 import com.example.catalogoproductos.data.CatalogoDbHelper.Companion.COL_PRECIO
+import com.example.catalogoproductos.data.CatalogoDbHelper.Companion.COL_EMAIL
 import com.example.catalogoproductos.data.CatalogoDbHelper.Companion.TABLE_CART
+import com.example.catalogoproductos.data.CatalogoDbHelper.Companion.TABLE_FAVORITES
 import com.example.catalogoproductos.data.CatalogoDbHelper.Companion.TABLE_ORDERS
 import com.example.catalogoproductos.data.CatalogoDbHelper.Companion.TABLE_ORDER_ITEMS
 import com.example.catalogoproductos.models.CartItem
@@ -30,6 +32,12 @@ import com.example.catalogoproductos.models.Producto
 class CartRepository(context: Context) {
 
     private val dbHelper = CatalogoDbHelper(context)
+    private val userEmail: String
+
+    init {
+        val sharedPref = context.getSharedPreferences("USER_PREFS", Context.MODE_PRIVATE)
+        userEmail = sharedPref.getString("user_email", "default@test.com") ?: "default@test.com"
+    }
 
     fun agregarAlCarrito(producto: Producto, cantidad: Int = 1): Long {
         return agregarAlCarritoRaw(
@@ -54,8 +62,8 @@ class CartRepository(context: Context) {
             val id = db.query(
                 TABLE_CART,
                 arrayOf(COL_ID, COL_CANTIDAD),
-                "$COL_NOMBRE = ? AND $COL_MARCA = ?",
-                arrayOf(nombre, marca),
+                "$COL_NOMBRE = ? AND $COL_MARCA = ? AND $COL_EMAIL = ?",
+                arrayOf(nombre, marca, userEmail),
                 null, null, null
             ).use { c ->
                 if (c.moveToFirst()) {
@@ -73,6 +81,7 @@ class CartRepository(context: Context) {
                         put(COL_PRECIO, precio)
                         put(COL_IMAGEN, imagen)
                         put(COL_CANTIDAD, cantidad)
+                        put(COL_EMAIL, userEmail)
                     }
                     db.insert(TABLE_CART, null, values)
                 }
@@ -88,7 +97,7 @@ class CartRepository(context: Context) {
         val db = dbHelper.readableDatabase
         val items = mutableListOf<CartItem>()
         db.query(
-            TABLE_CART, null, null, null, null, null, "$COL_ID ASC"
+            TABLE_CART, null, "$COL_EMAIL = ?", arrayOf(userEmail), null, null, "$COL_ID ASC"
         ).use { c ->
             val idxId = c.getColumnIndexOrThrow(COL_ID)
             val idxNombre = c.getColumnIndexOrThrow(COL_NOMBRE)
@@ -131,14 +140,14 @@ class CartRepository(context: Context) {
         val db = dbHelper.writableDatabase
         db.delete(
             TABLE_CART,
-            "$COL_NOMBRE = ? AND $COL_MARCA = ?",
-            arrayOf(producto.nombre, producto.marca)
+            "$COL_NOMBRE = ? AND $COL_MARCA = ? AND $COL_EMAIL = ?",
+            arrayOf(producto.nombre, producto.marca, userEmail)
         )
     }
 
     fun vaciarCarrito() {
         val db = dbHelper.writableDatabase
-        db.delete(TABLE_CART, null, null)
+        db.delete(TABLE_CART, "$COL_EMAIL = ?", arrayOf(userEmail))
     }
 
     fun confirmarCompra(): Long {
@@ -155,6 +164,7 @@ class CartRepository(context: Context) {
                 put(COL_ORDER_FECHA, System.currentTimeMillis())
                 put(COL_ORDER_TOTAL, total)
                 put(COL_ORDER_ITEMS_COUNT, itemsCount)
+                put(COL_EMAIL, userEmail)
             }
             val orderId = db.insert(TABLE_ORDERS, null, orderValues)
 
@@ -170,7 +180,7 @@ class CartRepository(context: Context) {
                 db.insert(TABLE_ORDER_ITEMS, null, v)
             }
 
-            db.delete(TABLE_CART, null, null)
+            db.delete(TABLE_CART, "$COL_EMAIL = ?", arrayOf(userEmail))
             db.setTransactionSuccessful()
             return orderId
         } finally {
@@ -182,7 +192,7 @@ class CartRepository(context: Context) {
         val db = dbHelper.readableDatabase
         val orders = mutableListOf<Order>()
         db.query(
-            TABLE_ORDERS, null, null, null, null, null, "$COL_ORDER_FECHA DESC"
+            TABLE_ORDERS, null, "$COL_EMAIL = ?", arrayOf(userEmail), null, null, "$COL_ORDER_FECHA DESC"
         ).use { c ->
             val idxId = c.getColumnIndexOrThrow(COL_ORDER_ID)
             val idxFecha = c.getColumnIndexOrThrow(COL_ORDER_FECHA)
@@ -243,5 +253,58 @@ class CartRepository(context: Context) {
             )
         }
         return items.size
+    }
+
+    fun agregarFavorito(producto: Producto) {
+        val db = dbHelper.writableDatabase
+        val values = ContentValues().apply {
+            put(COL_NOMBRE, producto.nombre)
+            put(COL_MARCA, producto.marca)
+            put(COL_PRECIO, producto.precio)
+            put(COL_IMAGEN, producto.imagen)
+            put(COL_EMAIL, userEmail)
+        }
+        db.insertWithOnConflict(TABLE_FAVORITES, null, values, android.database.sqlite.SQLiteDatabase.CONFLICT_IGNORE)
+    }
+
+    fun eliminarFavorito(producto: Producto) {
+        val db = dbHelper.writableDatabase
+        db.delete(TABLE_FAVORITES, "$COL_NOMBRE = ? AND $COL_MARCA = ? AND $COL_EMAIL = ?", arrayOf(producto.nombre, producto.marca, userEmail))
+    }
+
+    fun obtenerFavoritos(): List<Producto> {
+        val db = dbHelper.readableDatabase
+        val items = mutableListOf<Producto>()
+        db.query(
+            TABLE_FAVORITES, null, "$COL_EMAIL = ?", arrayOf(userEmail), null, null, "$COL_ID DESC"
+        ).use { c ->
+            val idxNombre = c.getColumnIndexOrThrow(COL_NOMBRE)
+            val idxMarca = c.getColumnIndexOrThrow(COL_MARCA)
+            val idxPrecio = c.getColumnIndexOrThrow(COL_PRECIO)
+            val idxImagen = c.getColumnIndexOrThrow(COL_IMAGEN)
+            while (c.moveToNext()) {
+                items.add(
+                    Producto(
+                        nombre = c.getString(idxNombre),
+                        marca = c.getString(idxMarca),
+                        precio = c.getDouble(idxPrecio),
+                        imagen = c.getInt(idxImagen),
+                        descripcion = "",
+                        notas = emptyList(),
+                        esFavorito = true
+                    )
+                )
+            }
+        }
+        return items
+    }
+
+    fun esFavorito(nombre: String, marca: String): Boolean {
+        val db = dbHelper.readableDatabase
+        db.query(
+            TABLE_FAVORITES, arrayOf(COL_ID), "$COL_NOMBRE = ? AND $COL_MARCA = ? AND $COL_EMAIL = ?", arrayOf(nombre, marca, userEmail), null, null, null
+        ).use { c ->
+            return c.moveToFirst()
+        }
     }
 }
