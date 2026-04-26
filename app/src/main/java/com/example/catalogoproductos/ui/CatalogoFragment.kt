@@ -44,9 +44,6 @@ class CatalogoFragment : Fragment(R.layout.fragment_catalogo) {
         )
 
         repository = CartRepository(requireContext())
-        listaOriginal.forEach { producto ->
-            producto.esFavorito = repository.esFavorito(producto.nombre, producto.marca)
-        }
 
         listaFiltrada = listaOriginal.toMutableList()
 

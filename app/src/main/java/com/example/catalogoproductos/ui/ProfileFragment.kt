@@ -16,11 +16,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.catalogoproductos.R
 import com.example.catalogoproductos.adapters.HistorialAdapter
 import com.example.catalogoproductos.data.CartRepository
+import com.example.catalogoproductos.data.FavoritoDao
 import com.example.catalogoproductos.models.Order
 
 class ProfileFragment : Fragment() {
 
     private lateinit var repository: CartRepository
+    private lateinit var favoritoDao: FavoritoDao
     private lateinit var historialAdapter: HistorialAdapter
     private val ordenes = mutableListOf<Order>()
 
@@ -39,6 +41,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         repository = CartRepository(requireContext())
+        favoritoDao = FavoritoDao(requireContext())
         val sharedPref = requireContext().getSharedPreferences("USER_PREFS", Context.MODE_PRIVATE)
         val userEmail = sharedPref.getString("user_email", "usuario@gmail.com")
 
@@ -153,7 +156,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun cargarFavoritosUI(view: View) {
-        val favoritos = repository.obtenerFavoritos()
+        val favoritos = favoritoDao.obtenerTodos()
         val txtStatFavoritos = view.findViewById<TextView>(R.id.txtStatFavoritos)
         txtStatFavoritos.text = favoritos.size.toString()
 
