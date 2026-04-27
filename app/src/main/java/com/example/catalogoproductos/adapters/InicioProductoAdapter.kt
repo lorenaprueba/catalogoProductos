@@ -10,7 +10,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.catalogoproductos.R
 import com.example.catalogoproductos.models.Producto
-import com.example.catalogoproductos.ui.DetalleFragment
+import com.google.android.material.button.MaterialButton
 
 class InicioProductoAdapter(private val lista: List<Producto>) :
     RecyclerView.Adapter<InicioProductoAdapter.ViewHolder>() {
@@ -19,6 +19,7 @@ class InicioProductoAdapter(private val lista: List<Producto>) :
         val imagen: ImageView = view.findViewById(R.id.imgInicioProducto)
         val nombre: TextView = view.findViewById(R.id.txtInicioNombre)
         val precio: TextView = view.findViewById(R.id.txtInicioPrecio)
+        val btnDetalle: MaterialButton = view.findViewById(R.id.btnInicioAgregar)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,16 +34,19 @@ class InicioProductoAdapter(private val lista: List<Producto>) :
         holder.precio.text = "$${producto.precio}"
         holder.imagen.setImageResource(producto.imagen)
 
-        // Evento de clic para abrir el detalle
-        holder.itemView.setOnClickListener {
-            val bundle = Bundle().apply {
-                putString("nombre", producto.nombre)
-                putString("marca", producto.marca)
-                putDouble("precio", producto.precio)
-                putString("descripcion", producto.descripcion)
-                putInt("imagen", producto.imagen)
-            }
+        val bundle = Bundle().apply {
+            putString("nombre", producto.nombre)
+            putString("marca", producto.marca)
+            putDouble("precio", producto.precio)
+            putString("descripcion", producto.descripcion)
+            putInt("imagen", producto.imagen)
+        }
 
+        holder.imagen.setOnClickListener {
+            holder.itemView.findNavController().navigate(R.id.detalleFragment, bundle)
+        }
+
+        holder.btnDetalle.setOnClickListener {
             holder.itemView.findNavController().navigate(R.id.detalleFragment, bundle)
         }
     }
