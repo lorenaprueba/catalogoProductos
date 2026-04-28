@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import com.example.catalogoproductos.databinding.FragmentWebBinding
 
 class WebFragment : Fragment() {
+    // Manejo de errores con try-catch para carga de WebView
 
     private var _binding: FragmentWebBinding? = null
     private val binding get() = _binding!!
