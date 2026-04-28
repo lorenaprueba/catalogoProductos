@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,15 +33,21 @@ class InicioFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        configurarRecyclerView()
-        configureVideoPlayer()
+        try {
+            configurarRecyclerView()
+            configureVideoPlayer()
+        } catch (e: Exception) {
+            Toast.makeText(
+                requireContext(),
+                "Error desconocido",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
 
-        // Navegación al catálogo
         binding.btnExplorarCatalogo.setOnClickListener {
             findNavController().navigate(R.id.catalogoFragment)
         }
 
-        // Estado inicial de la UI del video
         binding.imgVideoCover.visibility = View.VISIBLE
         binding.viewVideoOverlay.visibility = View.VISIBLE
         binding.videoPerfume.visibility = View.GONE

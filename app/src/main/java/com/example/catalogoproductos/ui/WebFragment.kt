@@ -9,11 +9,13 @@ import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.example.catalogoproductos.databinding.FragmentWebBinding
 
 class WebFragment : Fragment() {
+    // Manejo de errores con try-catch para carga de WebView
 
     private var _binding: FragmentWebBinding? = null
     private val binding get() = _binding!!
@@ -30,11 +32,17 @@ class WebFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
-        configureWebView()
-        setupUrlBar()
-        
-        // Cargar página inicial de Dior
-        loadUrl(defaultUrl)
+        try {
+            configureWebView()
+            setupUrlBar()
+            loadUrl(defaultUrl)
+        } catch (e: Exception) {
+            Toast.makeText(
+                requireContext(),
+                "Error desconocido",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     private fun setupUrlBar() {
